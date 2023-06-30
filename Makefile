@@ -1,17 +1,16 @@
-dctest_f = dctest
+srcs_f =	srcs
 
-dctest_env = $(dctest_f)/.env
+docker_src = $(srcs_f)/docker_compose.yml
 
-dctest_srcs =	$(dctest_f)/Dockerfile $(dctest_f)/docker-compose.yml \
-				$(dctest_f)/app.py $(dctest_f)/requirements.txt $(dctest_f)/.env
+nginx_srcs =	$(nginx_f)/nginx/Dockerfile
 
-all: dctest
+all: $(docker_src)
 
-dctest: $(dctest_srcs)
-		docker compose --project-directory $(dctest_f) up
+$(docker_src): 
+		docker compose --project-directory $(srcs_f) up
 
 down: 
-		docker compose --project-directory $(dctest_f) down
+		docker compose --project-directory $(srcs_f) down
 
-.PHONY: all dctest
+.PHONY: all down $(docker_src)
 

@@ -1,0 +1,7 @@
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "433:433"
+
+
