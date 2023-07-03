@@ -1,18 +1,18 @@
 services:
   nginx:
-    build: ./nginx
+    build: ./requirements/nginx
     container_name: nginx
     ports:
       - "443:443"
     env_file:
       - .env
   database:
-    build: ./mariadb
+    build: ./requirements/mariadb
     container_name: db
     env_file:
       - .env
   wordpress:
-    build: ./wordpress
+    build: ./requirements/wordpress
     container_name: wordpress
     env_file:
       - .env

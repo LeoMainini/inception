@@ -1,4 +1,4 @@
-FROM debian
+FROM debian:12
 RUN apt-get -y update && apt-get -y install nginx
 COPY text.html /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/
