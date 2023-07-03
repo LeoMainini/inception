@@ -1,7 +1,21 @@
 services:
   nginx:
     build: ./nginx
+    container_name: nginx
     ports:
-      - "433:433"
-
-
+      - "443:443"
+    env_file:
+      - .env
+  database:
+    build: ./mariadb
+    container_name: db
+    env_file:
+      - .env
+  wordpress:
+    build: ./wordpress
+    container_name: wordpress
+    env_file:
+      - .env
+networks:
+  42net:
+    driver: bridge
