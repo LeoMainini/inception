@@ -1,17 +1,43 @@
 srcs_f =	srcs
 
-docker_src = $(srcs_f)/docker_compose.yml
+user_dir = ${HOME}
 
-nginx_srcs =	$(nginx_f)/nginx/Dockerfile
+data_dir = $(user_dir)/data
 
-all: $(docker_src)
+wp_dir = $(data_dir)/wordpress
 
-$(docker_src):
+db_dir = $(data_dir)/mariadb
+
+all: build run
+
+$(db_dir):
+		@if [ -d $(db_dir) ]; then echo "Found data folder" ; else mkdir $(db_dir); fi
+
+$(data_dir):
+		@if [ -d $(data_dir) ]; then echo "Found database folder" ; else mkdir $(data_dir); fi
+
+$(wp_dir):
+		@if [ -d $(wp_dir) ]; then echo "Found wordpress folder" ; else mkdir $(wp_dir); fi
+
+make_dirs:	$(data_dir)  $(wp_dir) $(db_dir)
+
+build:	make_dirs
 		docker compose --project-directory $(srcs_f) build --no-cache
+
+run:
 		docker compose --project-directory $(srcs_f) up -d
+
+stop:
+		docker compose --project-directory $(srcs_f) stop
 
 down: 
 		docker compose --project-directory $(srcs_f) down
 
-.PHONY: all down exec $(docker_src)
+restart:	stop run
+
+rebuild:	down build
+
+re:			rebuild run
+
+.PHONY: all down $(db_dir) $(data_dir) $(wp_dir) make_dirs build run down stop rebuild restart re
 

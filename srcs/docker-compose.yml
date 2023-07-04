@@ -8,18 +8,34 @@ services:
       - "443:443"
     env_file:
       - .env
+    volumes:
+      - $HOME/data/wordpress:/var/www/php
+    networks:
+      - 42net
+
   database:
     build: ./requirements/mariadb
     container_name: db
     env_file:
       - .env
+    volumes:
+      - $HOME/data/mariadb/db:/var/lib/mysql
+    networks:
+      - 42net
+
   wordpress:
     build: ./requirements/wordpress
     depends_on:
       - database
+    working_dir: /var/www/php
     container_name: wordpress
     env_file:
       - .env
+    volumes:
+      - $HOME/data/wordpress:/var/www/php
+    networks:
+      - 42net
+
 networks:
   42net:
     driver: bridge
