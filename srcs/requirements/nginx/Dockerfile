@@ -4,6 +4,7 @@ RUN rm -f /etc/nginx/sites-enabled/default
 COPY nginx.conf /etc/nginx
 COPY php.conf /etc/nginx/conf.d
 EXPOSE 443
+EXPOSE 80
 #CMD ["/usr/sbin/nginx", "-h"]
 
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]

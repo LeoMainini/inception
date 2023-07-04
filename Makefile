@@ -22,7 +22,7 @@ $(wp_dir):
 make_dirs:	$(data_dir)  $(wp_dir) $(db_dir)
 
 build:	make_dirs
-		docker compose --project-directory $(srcs_f) build --no-cache
+		docker compose --project-directory $(srcs_f) build --no-cache 2> log-err.txt
 
 run:
 		docker compose --project-directory $(srcs_f) up -d
@@ -37,7 +37,11 @@ restart:	stop run
 
 rebuild:	down build
 
+reset:
+		docker ps -a -q | xargs -n1 -I % docker rm %
+		docker images -q | xargs -n1 -I % docker rmi %
+
 re:			rebuild run
 
-.PHONY: all down $(db_dir) $(data_dir) $(wp_dir) make_dirs build run down stop rebuild restart re
+.PHONY: all down $(db_dir) $(data_dir) $(wp_dir) make_dirs build run down stop rebuild restart re reset
 
