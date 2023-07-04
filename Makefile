@@ -37,9 +37,10 @@ restart:	stop run
 
 rebuild:	down build
 
-reset:
-		docker ps -a -q | xargs -n1 -I % docker rm %
-		docker images -q | xargs -n1 -I % docker rmi %
+reset:	down
+		docker images -q | xargs -n1 docker rmi 
+		sudo rm -rf /var/lib/docker
+		sudo systemctl restart docker
 
 re:			rebuild run
 
