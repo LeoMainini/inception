@@ -1,3 +1,5 @@
 Dockerized LEMP stack - https://linuxiac.com/how-to-set-up-lemp-stack-with-docker-compose/
 
 tail -f /var/log/nginx/* - nginx err log
+
+https://stackoverflow.com/questions/45710469/cant-mariadb-inside-docker-container

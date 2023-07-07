@@ -13,6 +13,7 @@ services:
       - $HOME/data/wordpress:/var/www/php
     networks:
       - 42net
+    restart: unless-stopped
 
   database:
     build: ./requirements/mariadb
@@ -23,6 +24,7 @@ services:
       - $HOME/data/mariadb/db:/var/lib/mysql
     networks:
       - 42net
+    restart: unless-stopped
 
   wordpress:
     build: ./requirements/wordpress
@@ -36,6 +38,7 @@ services:
       - $HOME/data/wordpress:/var/www/php
     networks:
       - 42net
+    restart: unless-stopped
 
 networks:
   42net:
