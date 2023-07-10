@@ -1,11 +1,15 @@
 FROM debian:12
 RUN apt-get update
 RUN apt-get install mariadb-server -y
+RUN chown -R mysql /var/lib/mysql
+RUN chgrp -R mysql /var/lib/mysql
+RUN mariadb-install-db --user=mysql --datadir=/var/lib/mysql
 COPY my.cnf /etc/mysql/my.cnf
 COPY my.cnf /etc/mysql/mariadb.cnf
+# COPY 50-server-patched.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 EXPOSE 3306
-CMD ["mariadbd", "--datadir='/var/lib/mysql'", "--user=root"]
-# CMD ["tail", "/dev/random"]
+CMD ["mysqld_safe", "--user=root"]
+# CMD ["sleep", "infinity"]
 # CMD ["mariadbd"]
 # RUN mysql_secure_installation
 # RUN mysql
