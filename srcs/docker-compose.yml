@@ -20,8 +20,8 @@ services:
     container_name: db
     env_file:
       - .env
-    volumes:
-      - $HOME/data/mariadb/db:/var/lib/mysql
+    # volumes:
+    #   - $HOME/data/mariadb/db:/var/lib/mysql
     networks:
       - 42net
     restart: unless-stopped
