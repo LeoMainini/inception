@@ -37,8 +37,11 @@ restart:	stop run
 
 rebuild:	down build
 
-reset:	down
-		docker images -q | xargs -n1 docker rmi 
+
+delete-dockerconts: down deinit
+		docker images -q | xargs -n1 -r docker rmi 
+
+reset:	delete-dockerconts
 		sudo rm -rf /var/lib/docker
 		sudo systemctl restart docker
 
@@ -47,5 +50,5 @@ deinit:
 
 re:		down deinit build run
 
-.PHONY: all down $(db_dir) $(data_dir) $(wp_dir) make_dirs build run down stop rebuild restart re reset deinit
+.PHONY: all down $(db_dir) $(data_dir) $(wp_dir) make_dirs build run down stop rebuild restart re reset deinit delete-dockerconts
 
