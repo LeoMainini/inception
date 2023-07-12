@@ -42,7 +42,10 @@ reset:	down
 		sudo rm -rf /var/lib/docker
 		sudo systemctl restart docker
 
-re:			rebuild run
+deinit:
+		sudo rm -f ~/data/mariadb/db/.initialized
 
-.PHONY: all down $(db_dir) $(data_dir) $(wp_dir) make_dirs build run down stop rebuild restart re reset
+re:		down deinit build run
+
+.PHONY: all down $(db_dir) $(data_dir) $(wp_dir) make_dirs build run down stop rebuild restart re reset deinit
 
