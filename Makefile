@@ -47,6 +47,8 @@ reset:	delete-dockerconts
 
 deinit:
 		sudo rm -f ~/data/mariadb/db/.initialized
+		sudo rm -rf ~/data/mariadb/db/*
+		sudo rm -rf ~/data/wordpress/init
 
 re:		down deinit build run
 

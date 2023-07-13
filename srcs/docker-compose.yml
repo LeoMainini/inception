@@ -28,9 +28,9 @@ services:
 
   wordpress:
     build: ./requirements/wordpress
-    # depends_on:
-    #   - database
-    working_dir: /var/www/php
+    depends_on:
+      - database
+    # working_dir: /var/www/php
     container_name: wordpress
     env_file:
       - .env
