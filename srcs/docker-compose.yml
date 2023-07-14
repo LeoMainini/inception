@@ -25,12 +25,18 @@ services:
     networks:
       - 42net
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "sh healthchecker.sh" ]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+      start_period: 0s
 
   wordpress:
     build: ./requirements/wordpress
     depends_on:
-      - database
-    # working_dir: /var/www/php
+      database:
+        condition: service_healthy
     container_name: wordpress
     env_file:
       - .env

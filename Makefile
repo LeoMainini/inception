@@ -49,6 +49,7 @@ deinit:
 		sudo rm -f ~/data/mariadb/db/.initialized
 		sudo rm -rf ~/data/mariadb/db/*
 		sudo rm -rf ~/data/wordpress/init
+		sudo rm -rf ~/data/wordpress/certs
 
 re:		down deinit build run
 

@@ -2,6 +2,7 @@ FROM debian:12
 SHELL ["/bin/bash", "-c"]
 COPY tools/build.sh build.sh
 COPY tools/inititi.sh inititi.sh
+COPY tools/healthchecker.sh healthchecker.sh 
 RUN groupadd -r mysql && useradd -r -g mysql mysql
 RUN apt-get update
 RUN apt-get install mariadb-server -y

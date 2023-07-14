@@ -5,7 +5,7 @@ if [ ! -f /var/www/php/init/.initialized ]; then
 	tar xzvf latest.tar.gz
 	cd wordpress
 	head -n 20 wp-config-sample.php > wp-config.php
-	echo "define('DN_NAME', '$MYSQL_DATABASE');" >> wp-config.php
+	echo "define('DB_NAME', '$MYSQL_DATABASE');" >> wp-config.php
 	echo "define('DB_USER', '$MARIADB_WORDPRESS_USER');" >> wp-config.php
 	echo "define('DB_PASSWORD', '$MARIADB_WORDPRESS_PASSWORD');" >> wp-config.php
 	echo "define('DB_HOST','db:3306');" >> wp-config.php
@@ -18,6 +18,6 @@ if [ ! -f /var/www/php/init/.initialized ]; then
 	mkdir /var/www/php/init
 	touch /var/www/php/init/.initialized
 fi
-curl -s https://api.wordpress.org/secret-key/1.1/salt/ > keys.txt
+chown -R www-data:www-data /var/www/php
 echo "wordpress initialized"
 exec "$@" 
