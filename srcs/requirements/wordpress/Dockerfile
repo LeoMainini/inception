@@ -7,6 +7,9 @@ COPY tools/php-fpm.conf /etc/php/8.2/fpm/pool.d/01-custon-config.conf
 COPY tools/healthchecker.sh healthchecker.sh
 STOPSIGNAL SIGQUIT
 RUN mv /etc/php/8.2/fpm/pool.d/www.conf /etc/php/8.2/fpm/pool.d/00-default-config.conf
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
 EXPOSE 9000
 ENTRYPOINT ["sh", "~/init.sh" ]
 CMD ["php-fpm8.2", "-F", "-R"]

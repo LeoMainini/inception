@@ -15,9 +15,6 @@ if [ ! -f /var/www/init/.initialized ]; then
 	tail -n 38 wp-config-sample.php >> wp-config.php
 	cp -a /tmp/wordpress/. /var/www/php
 	chown -R www-data:www-data /var/www/php
-	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-	chmod +x wp-cli.phar
-	mv wp-cli.phar /usr/local/bin/wp
 	wp --allow-root --path=/var/www/php core install --url=$HOSTNAME \
 		--title="leferrei's site" --admin_user=$WORDPRESS_ADMIN \
 		--admin_password=$WORDPRESS_ADMIN_PASSWORD  --admin_email=$WORDPRESS_ADMIN_EMAIL
