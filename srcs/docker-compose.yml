@@ -4,13 +4,14 @@ services:
     container_name: nginx
     hostname: leferrei.42.fr
     depends_on:
-      - wordpress
+      wordpress:
+        condition: service_healthy
     ports:
       - "443:443"
     env_file:
       - .env
     volumes:
-      - $HOME/data/wordpress:/var/www/php
+      - $HOME/data/wordpress:/var/www
     networks:
       - 42net
     restart: unless-stopped
@@ -41,10 +42,16 @@ services:
     env_file:
       - .env
     volumes:
-      - $HOME/data/wordpress:/var/www/php
+      - $HOME/data/wordpress:/var/www
     networks:
       - 42net
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "sh healthchecker.sh" ]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+      start_period: 0s
 
 networks:
   42net:

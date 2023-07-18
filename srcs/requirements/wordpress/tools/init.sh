@@ -1,4 +1,4 @@
-if [ ! -f /var/www/php/init/.initialized ]; then
+if [ ! -f /var/www/init/.initialized ]; then
 	echo "initializing initial wordpress config" 
 	cd /tmp
 	curl -LO https://wordpress.org/latest.tar.gz
@@ -15,9 +15,17 @@ if [ ! -f /var/www/php/init/.initialized ]; then
 	tail -n 38 wp-config-sample.php >> wp-config.php
 	cp -a /tmp/wordpress/. /var/www/php
 	chown -R www-data:www-data /var/www/php
-	mkdir /var/www/php/init
-	touch /var/www/php/init/.initialized
+	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+	chmod +x wp-cli.phar
+	mv wp-cli.phar /usr/local/bin/wp
+	wp --allow-root --path=/var/www/php core install --url=$HOSTNAME \
+		--title="leferrei's site" --admin_user=$WORDPRESS_ADMIN \
+		--admin_password=$WORDPRESS_ADMIN_PASSWORD  --admin_email=$WORDPRESS_ADMIN_EMAIL
+	wp --allow-root --path=/var/www/php user create $WORDPRESS_USER \
+		$WORDPRESS_USER_EMAIL --role=subscriber --user_pass=$WORDPRESS_USER_PASSWORD
+	mkdir /var/www/init
+	touch /var/www/init/.initialized
 fi
-chown -R www-data:www-data /var/www/php
+chown -R www-data:www-data /var/www/
 echo "wordpress initialized"
 exec "$@" 
