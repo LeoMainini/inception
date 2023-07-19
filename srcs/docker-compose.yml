@@ -11,7 +11,7 @@ services:
     env_file:
       - .env
     volumes:
-      - $HOME/data/wordpress:/var/www
+      - wordpress-data:/var/www
     networks:
       - 42net
     restart: unless-stopped
@@ -22,7 +22,7 @@ services:
     env_file:
       - .env
     volumes:
-      - $HOME/data/mariadb/db:/var/lib/mysql
+      - db-data:/var/lib/mysql
     networks:
       - 42net
     restart: unless-stopped
@@ -42,7 +42,7 @@ services:
     env_file:
       - .env
     volumes:
-      - $HOME/data/wordpress:/var/www
+      - wordpress-data:/var/www
     networks:
       - 42net
     restart: unless-stopped
@@ -52,6 +52,20 @@ services:
       timeout: 30s
       retries: 5
       start_period: 0s
+
+volumes:
+  db-data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: "$HOME/data/mariadb"
+  wordpress-data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: "$HOME/data/wordpress"
 
 networks:
   42net:

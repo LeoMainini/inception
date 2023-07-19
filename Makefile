@@ -30,26 +30,27 @@ run:
 stop:
 		docker compose --project-directory $(srcs_f) stop
 
-down: 
+down: 	stop
 		docker compose --project-directory $(srcs_f) down
 
 restart:	stop run
 
 rebuild:	down build
 
-
-delete-dockerconts: down deinit
-		docker images -q | xargs -n1 -r docker rmi 
-
-reset:	delete-dockerconts
+reset:	down deinit
+		docker images -q | xargs -n1 -r docker rmi
+		docker volume ls -q | xargs -n1 -r docker volume rm
+		docker ps -qs | xargs -n1 -r docker rm
+		docker network ls -q | grep "42" | xargs -n1 -r docker network rm
 		sudo rm -rf /var/lib/docker
 		sudo systemctl restart docker
 
 deinit:
-		sudo rm -f ~/data/mariadb/db/.initialized
-		sudo rm -rf ~/data/mariadb/db/*
+		sudo rm -rf ~/data/mariadb/.initialized
+		sudo rm -rf ~/data/mariadb/*
 		sudo rm -rf ~/data/wordpress/init
 		sudo rm -rf ~/data/wordpress/certs
+		sudo rm -rf ~/data/wordpress/php
 
 re:		down deinit build run
 
