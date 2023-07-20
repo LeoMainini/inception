@@ -11,4 +11,4 @@ COPY tools/my.cnf /etc/mysql/mariadb.cnf
 RUN mkdir -p /var/lib/mysql /var/run/mysqld
 EXPOSE 3306
 ENTRYPOINT ["sh", "inititi.sh" ]
-CMD ["mariadbd", "--user=mysql"]
+CMD ["mariadbd", "--user=mysql", "--init-file=/instructions.sql"]
