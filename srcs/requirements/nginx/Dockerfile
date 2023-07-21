@@ -1,4 +1,4 @@
-FROM debian:12
+FROM debian:11
 RUN apt-get -y update && apt-get -y install nginx wget libnss3-tools 
 RUN rm -f /etc/nginx/sites-enabled/default
 COPY tools/nginx.conf /etc/nginx

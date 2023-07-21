@@ -1,4 +1,4 @@
-FROM debian:12
+FROM debian:11
 SHELL ["/bin/bash", "-c"]
 COPY tools/build.sh build.sh
 COPY tools/inititi.sh inititi.sh
