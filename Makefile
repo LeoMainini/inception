@@ -41,7 +41,7 @@ reset:	down deinit
 		docker images -q | xargs -n1 -r docker rmi
 		docker volume ls -q | xargs -n1 -r docker volume rm
 		docker ps -qs | xargs -n1 -r docker rm
-		docker network ls -q | grep "42" | xargs -n1 -r docker network rm
+		docker network ls | grep 42 | awk '{print $$1}' | xargs -n1 -r docker network rm
 		sudo rm -rf /var/lib/docker
 		sudo systemctl restart docker
 
