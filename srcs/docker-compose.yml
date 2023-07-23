@@ -49,8 +49,8 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "sh healthchecker.sh" ]
       interval: 5s
-      timeout: 30s
-      retries: 5
+      timeout: 60s
+      retries: 8
       start_period: 0s
 
 volumes:

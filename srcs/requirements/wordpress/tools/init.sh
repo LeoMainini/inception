@@ -1,3 +1,5 @@
+chown -R www-data:www-data /var/www/
+
 if [ ! -f /var/www/init/.initialized ]; then
 	echo "initializing initial wordpress config" 
 	cd /tmp
@@ -13,8 +15,7 @@ if [ ! -f /var/www/init/.initialized ]; then
 	tail -n 64 wp-config-sample.php | head -n 18 >> wp-config.php
 	curl -s https://api.wordpress.org/secret-key/1.1/salt/ >> wp-config.php
 	tail -n 38 wp-config-sample.php >> wp-config.php
-	cp -a /tmp/wordpress/. /var/www/php
-	chown -R www-data:www-data /var/www/php
+	mkdir /var/www/php && mv -f /tmp/wordpress/* /var/www/php/
 	wp --allow-root --path=/var/www/php core install --url=$HOSTNAME \
 		--title="leferrei's site" --admin_user=$WORDPRESS_ADMIN \
 		--admin_password=$WORDPRESS_ADMIN_PASSWORD  --admin_email=$WORDPRESS_ADMIN_EMAIL
@@ -23,6 +24,5 @@ if [ ! -f /var/www/init/.initialized ]; then
 	mkdir /var/www/init
 	touch /var/www/init/.initialized
 fi
-chown -R www-data:www-data /var/www/
 echo "wordpress initialized"
 exec "$@" 

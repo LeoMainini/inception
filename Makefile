@@ -22,7 +22,7 @@ $(wp_dir):
 make_dirs:	$(data_dir)  $(wp_dir) $(db_dir)
 
 build:	make_dirs
-		docker compose --project-directory $(srcs_f) build --no-cache 2> log-err.txt
+		docker compose --project-directory $(srcs_f) build #--no-cache 2> log-err.txt
 
 run:
 		docker compose --project-directory $(srcs_f) up -d
@@ -51,6 +51,7 @@ deinit:
 		sudo rm -rf ~/data/wordpress/init
 		sudo rm -rf ~/data/wordpress/certs
 		sudo rm -rf ~/data/wordpress/php
+		sudo rm -rf ~/data/wordpress/*
 
 re:		down deinit build run
 
